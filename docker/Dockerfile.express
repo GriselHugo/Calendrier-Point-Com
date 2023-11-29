@@ -1,0 +1,14 @@
+# Utilisez une image de Node.js comme base
+FROM node:latest
+
+# Définissez le répertoire de travail dans le conteneur
+WORKDIR /app
+
+# Copiez les fichiers du projet dans le conteneur
+COPY ./server .
+
+# Installez les dépendances
+RUN npm install
+
+# Exécutez l'application Express
+CMD ["npm", "start"]

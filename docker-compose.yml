@@ -1,0 +1,39 @@
+version: '3'
+services:
+  react-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.react
+    container_name: cpc-client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+    depends_on:
+      - mariadb
+      - express-api
+
+  express-api:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.express
+    container_name: cpc-server
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./server:/app
+    depends_on:
+      - mariadb
+
+  mariadb:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.mariadb
+    container_name: cpc-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/app
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
