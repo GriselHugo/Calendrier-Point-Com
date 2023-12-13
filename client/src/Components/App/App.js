@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import Login from '../Login/Login';
+import Navbar from '../Navbar/Navbar';
 import Router from '../Router/Router';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   return (
     isLogged ? (
       <BrowserRouter>
+        <Navbar />
         <Router />
       </BrowserRouter>
     ) : (
