@@ -1,0 +1,116 @@
+@import "../App/App.css";
+
+.login-screen {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(var(--mainColor1), var(--secondaryColor1));
+    display: flex;
+    justify-content: center;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    background: #fff;
+    width: 600px;
+    border-radius: 20px;
+    min-height: 600px;
+}
+
+.login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: var(--secondaryColor1);
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline {
+    width: 60px;
+    height: 5px;
+    background: var(--secondaryColor1);
+    border-radius: 10px;
+}
+
+.inputs {
+    margin-top: 104px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #EAEAEA;
+    border-radius: 5px;
+}
+
+.input img {
+    margin: 0px 30px;
+}
+
+.input input {
+    height: 50px;
+    width: 388px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 20px;
+}
+
+.submit-container {
+    display: flex;
+    gap: 30px;
+    margin: 20px auto;
+    margin-top: auto;
+    margin-bottom: 30px;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+    color: #fff;
+    background: var(--secondaryColor1);
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray {
+    background: #EAEAEA;
+    color: #676767;
+}
+
+.iconPlaceholder {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconStyle {
+    font-size: 25px;
+    color : #676767;
+
+}

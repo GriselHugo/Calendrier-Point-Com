@@ -8,7 +8,6 @@ USE `cpc-db`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -18,9 +17,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 /* Créer une table "todo" */
 CREATE TABLE IF NOT EXISTS `todo` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `action` varchar(255) NOT NULL,
     `user_id` int(11) NOT NULL,
+    `action` varchar(255) NOT NULL,
     `status` varchar(255) NOT NULL,
+    `begin_at` datetime NOT NULL,
     `end_at` datetime NOT NULL,
     `created_at` datetime NOT NULL,
     `updated_at` datetime NOT NULL,
