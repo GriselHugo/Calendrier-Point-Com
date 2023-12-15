@@ -87,7 +87,7 @@ function Profil() {
         {openFormUsername ? (
           <div className="profil-info-inputs">
             <div className="profil-info-input">
-              <div className="iconPlaceholder">
+              <div className="littleIconPlaceHolder">
                 <IonIcon icon={person} className="iconStyleGrey"/>
               </div>
               <input type="text" placeholder="New username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
@@ -111,20 +111,20 @@ function Profil() {
         {openFormPassword ? (
           <div className="profil-info-inputs">
           <div className="profil-info-input">
-            <div className="iconPlaceholder">
+            <div className="littleIconPlaceHolder">
               <IonIcon icon={lockClosed} className="iconStyleGrey"/>
             </div>
             <input  type={showOldPassword ? "text" : "password"} placeholder="Old password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
-            <div className="iconPlaceholder">
+            <div className="littleIconPlaceHolder">
               <IonIcon icon={showOldPassword ? eye : eyeOff} onClick={() => setShowOldPassword(!showOldPassword)} className="iconStyleGrey"/>
             </div>
           </div>
           <div className="profil-info-input">
-            <div className="iconPlaceholder">
+            <div className="littleIconPlaceHolder">
               <IonIcon icon={lockClosed} className="iconStyleGrey"/>
             </div>
             <input type={showNewPassword ? "text" : "password"} placeholder="New password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            <div className="iconPlaceholder">
+            <div className="littleIconPlaceHolder">
               <IonIcon icon={showNewPassword ? eye : eyeOff} onClick={() => setShowNewPassword(!showNewPassword)} className="iconStyleGrey"/>
             </div>
           </div>

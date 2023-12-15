@@ -1,0 +1,8 @@
+.homeContainer {
+  margin: 1rem;
+}
+
+.homeContainerTitle {
+  text-decoration: underline;
+  font-weight: bold;
+}

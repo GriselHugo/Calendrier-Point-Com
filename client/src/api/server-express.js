@@ -66,6 +66,12 @@ class Server {
         },
       );
     }
+
+    /* HOME */
+
+    getUsers() {
+      return this.api.get('/get-users');
+    }
 }
 
 const expressServer = new Server();
