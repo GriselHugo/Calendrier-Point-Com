@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
+const { json } = require('body-parser');
+
+/* Sign Up */
 
 function processSignUp({ res, username, password }) {
     const db = require('../database-config');
 
     const query = 'INSERT INTO users (name, password, created_at, updated_at) VALUES (?, ?, NOW(), NOW())';
+    const selectQuery = 'SELECT * FROM users WHERE name = ?';
 
     const key = process.env.HASH_KEY;
 
@@ -20,7 +24,15 @@ function processSignUp({ res, username, password }) {
             return;
         }
 
-        res.status(201).json(results);
+        // console.log(results);
+        db.query(selectQuery, [username], (error, userResults) => {
+            if (error) {
+                res.status(500).send('Error retrieving user data');
+                return;
+            }
+
+            res.status(201).json(userResults);
+        });
     });
 }
 
@@ -31,7 +43,7 @@ function signUp({ res, username, password }) {
 
     db.query(query, [username], (error, results) => {
         if (error) {
-            console.log("caca", error);
+            console.log("Erreur :", error);
             res.status(500).send('Error checking user existence');
             return;
         }
@@ -56,6 +68,8 @@ router.post('/sign-up', (req, res) => {
     signUp({ res, username, password });
 });
 
+/* Log In */
+
 function logIn({ res, username, password }) {
     const db = require('../database-config');
 
@@ -75,6 +89,7 @@ function logIn({ res, username, password }) {
         }
 
         if (results.length > 0) {
+            // console.log(results);
             res.status(200).json(results);
             return;
         }

@@ -15,17 +15,19 @@ function Navbar() {
 
   const logOut = () => {
     localStorage.setItem("isLogged", 0);
-    window.location.reload();
+    localStorage.setItem("currentUserId", 0);
+    window.location.replace('/');
   }
 
   return (
     <header id="navHeader">
-      <h3>GIF-point-com</h3>
+      <h3>Calendrier-point-com</h3>
 
       <nav id="navBar" ref={navRef}>
         <Link to="/">Home</Link>
         <Link to="/calendar">Calendar</Link>
         <Link to="/todo">Todo</Link>
+        <Link to="/profil">Profil</Link>
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>

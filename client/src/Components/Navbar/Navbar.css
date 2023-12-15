@@ -28,7 +28,7 @@
 }
 
 #navBar a:hover {
-  color: var(--secondaryColor);
+  color: var(--secondaryColor2);
 }
 
 @media only screen and (max-width: 1024px) {
@@ -48,7 +48,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 1.5rem;
-		background-color: var(--mainColor);
+		background-color: var(--mainColor1);
 		transition: 1s;
 	}
 

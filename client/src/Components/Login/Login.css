@@ -60,10 +60,6 @@
     border-radius: 5px;
 }
 
-.input img {
-    margin: 0px 30px;
-}
-
 .input input {
     height: 50px;
     width: 388px;
@@ -72,6 +68,19 @@
     outline: none;
     color: #797979;
     font-size: 20px;
+}
+
+.iconPlaceholder {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconStyle {
+    font-size: 25px;
+    color : #676767;
 }
 
 .submit-container {
@@ -99,18 +108,4 @@
 .gray {
     background: #EAEAEA;
     color: #676767;
-}
-
-.iconPlaceholder {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.iconStyle {
-    font-size: 25px;
-    color : #676767;
-
 }

@@ -22,6 +22,8 @@ function signUpButtons({ setAction, setIsLogged, setShowAlert, setAlertMessage, 
     expressServer.signUp(username, password).then((response) => {
       if (response.status === 201) {
         setIsLogged(true);
+        // console.log(response.data[0].id);
+        localStorage.setItem("currentUserId", response.data[0].id);
         localStorage.setItem("isLogged", 1);
         setShowAlert(false);
         setAlertMessage("");
@@ -61,6 +63,8 @@ function loginButtons({ setAction, setIsLogged, setShowAlert, setAlertMessage, u
         setIsLogged(true);
         setShowAlert(false);
         setAlertMessage("");
+        // console.log(response.data[0].id);
+        localStorage.setItem("currentUserId", response.data[0].id);
         localStorage.setItem("isLogged", 1);
       }
     }).catch((error) => {
