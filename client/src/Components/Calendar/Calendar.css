@@ -1,0 +1,151 @@
+@import "../App/App.css";
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 2rem; */
+  border: 1px solid var(--mainColor2);
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background: var(--mainColor2);
+  color: var(--textColor);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.big-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 75%;
+}
+
+.small-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 25%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background: var(--mainColor2);
+  color: var(--textColor);
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--mainColor4);
+    color: var(--textColor);
+  }
+}
+
+.whiteIcon {
+  height: 50px;
+  width: 50px;
+  color: var(--textColor);
+}
+
+.days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: var(--mainColor3);
+  color: var(--textColor);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.day-of-week {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--mainColo3);
+}
+
+.calendar-day {
+  width: 100%;
+  border: 1px solid var(--mainColor4);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.one-row {
+  height: 700px;
+}
+
+.five-rows {
+  height: calc(700px / 5);
+}
+
+.six-rows {
+  height: calc(700px / 6);
+}
+
+.current-month {
+  color: var(--mainColor2);
+
+  &:hover {
+    background: var(--mainColor4);
+    color: var(--textColor);
+  }
+}
+
+.other-month {
+  color: var(--mainColor5);
+
+  &:hover {
+    background: var(--mainColor5);
+    color: var(--textColor);
+  }
+}
+
+.today {
+  color: var(--secondaryColor1);
+  border: 2px solid var(--secondaryColor1);
+
+  &:hover {
+    background: var(--secondaryColor2);
+    color: var(--textColor);
+  }
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.todos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
