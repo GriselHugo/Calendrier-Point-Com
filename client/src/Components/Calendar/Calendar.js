@@ -11,10 +11,36 @@ import { reorderThreeOutline } from 'ionicons/icons';
 
 import './Calendar.css';
 
+import expressServer from "../../api/server-express";
+
 function Calendar() {
   const [CurrentDate, setCurrentDate] = useState(moment());
   console.log("CurrentDate: " + CurrentDate.format('DD/MM/YYYY HH:mm:ss'));
   const [viewMode, setViewMode] = useState('month');
+
+  const currentUserId = parseInt(localStorage.getItem("currentUserId"));
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    expressServer.getTodosByUser(currentUserId).then((response) => {
+      if (response.status === 200) {
+        setTodos(response.data);
+      } else {
+        console.log("Todos not retrieved");
+      }
+    }).catch((err) => {
+      console.error(err);
+    });
+  }, [currentUserId]);
+
+  const getTodosByDate = (date) => {
+    const todosByDate = todos.filter((todo) => {
+      const todoDate = moment(todo.begin_at);
+      return todoDate.isSame(date, 'day');
+    }
+    );
+    return todosByDate;
+  };
 
   useEffect(() => {
     moment.locale('fr');
@@ -63,9 +89,11 @@ function Calendar() {
             {currentDate.format('D')}
           </div>
           <div className="todos">
-            <div className="event">Event 1</div>
-            <div className="event">Event 2</div>
-            <div className="event">Event 3</div>
+            {getTodosByDate(currentDate).map((todo) => (
+              <div key={todo.id} className={`todo ${todo.status === 'done' ? 'done' : ''}`}>
+                {todo.action}
+              </div>
+            ))}
           </div>
         </div>
       );
