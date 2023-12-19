@@ -12,8 +12,6 @@ function Todo() {
     const [status, setStatus] = useState("not done");
     const [selectedDate, setSelectedDate] = useState(null);
 
-    // const [selectedTodo, setSelectedTodo] = useState(null);
-
     const [modifiedTodoId, setModifiedTodoId] = useState(0);
     const [modifiedAction, setModifiedAction] = useState("");
     const [modifiedStatus, setModifiedStatus] = useState("not done");
@@ -32,7 +30,6 @@ function Todo() {
     };
 
     const handleTodoClick = (todo) => {
-        // setSelectedTodo(todo);
         setModifiedTodoId(todo.id);
         setModifiedAction(todo.action);
         setModifiedStatus(todo.status);
@@ -53,28 +50,25 @@ function Todo() {
 
     function convertISOToDatetime(isoDateString) {
         const date = new Date(isoDateString);
-        // Obtenez les composants de la date et de l'heure
+
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; // Les mois commencent à 0
+        const month = date.getMonth() + 1;
         const day = date.getDate();
         const hours = date.getHours();
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
-        // Format de la date : 'YYYY-MM-DD HH:mm:ss'
+
         const datetime = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
         return datetime;
     }
 
     function convertDatimeToText(datetimeString) {
         const date = new Date(datetimeString);
-        // Obtenez les composants de la date et de l'heure
+
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; // Les mois commencent à 0
+        const month = date.getMonth() + 1;
         const day = date.getDate();
-        // const hours = date.getHours();
-        // const minutes = date.getMinutes();
-        // const seconds = date.getSeconds();
-        // Format de la date : 'DD-MM-YYYY'
+
         const text = `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
         return text;
     }
@@ -94,7 +88,6 @@ function Todo() {
         ).then((response) => {
             if (response.status === 201) {
                 setTodos([...todos, response.data[0]]);
-                // Réinitialiser les champs après l'ajout
                 setAction("");
                 setSelectedDate(null);
                 setStatus("not done");
@@ -102,7 +95,6 @@ function Todo() {
                 console.log("Todo not added");
             }
         }).catch((err) => {
-            // Gérer les erreurs ici
             console.error(err);
         });
     };
