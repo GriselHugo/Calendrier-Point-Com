@@ -72,6 +72,50 @@ class Server {
     getUsers() {
       return this.api.get('/get-users');
     }
+
+    /* TODO */
+
+    addTodo(userId, action, status, beginAt, endAt) {
+      return this.api.post('/add-todo',
+        {
+          userId: userId,
+          action: action,
+          status: status,
+          beginAt: beginAt,
+          endAt: endAt,
+        },
+      );
+    }
+
+    removeTodo (todoId) {
+      return this.api.post('/remove-todo',
+        {
+          todoId: todoId,
+        },
+      );
+    }
+
+    updateTodo (todoId, action, status, beginAt, endAt) {
+      return this.api.post('/update-todo',
+        {
+          todoId: todoId,
+          action: action,
+          status: status,
+          beginAt: beginAt,
+          endAt: endAt,
+        },
+      );
+    }
+
+    getTodosByUser (userId) {
+      return this.api.get('/get-todos-by-user',
+        {
+          params: {
+            userId: userId,
+          },
+        },
+      );
+    }
 }
 
 const expressServer = new Server();

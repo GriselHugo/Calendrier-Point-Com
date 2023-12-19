@@ -5,8 +5,8 @@ import "./Home.css";
 
 function Home() {
     const currentUserId = parseInt(localStorage.getItem("currentUserId"));
-    console.log(currentUserId);
-    console.log(typeof currentUserId);
+    // console.log(currentUserId);
+    // console.log(typeof currentUserId);
 
     const [users, setUsers] = useState([]);
     const [currentUser, setCurrentUser] = useState({});

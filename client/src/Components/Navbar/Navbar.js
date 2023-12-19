@@ -21,7 +21,7 @@ function Navbar() {
 
   return (
     <header id="navHeader">
-      <h3>Calendrier-point-com</h3>
+      <h3>Calendar-point-com</h3>
 
       <nav id="navBar" ref={navRef}>
         <Link to="/">Home</Link>
