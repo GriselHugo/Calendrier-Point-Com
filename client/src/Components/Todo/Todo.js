@@ -6,12 +6,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 function Todo() {
     const currentUserId = parseInt(localStorage.getItem("currentUserId"));
-    const [todos, setTodos] = useState();
-    const [compteur, setCompteur] = useState(0);
+    const [todos, setTodos] = useState([]);
+
     const [action, setAction] = useState("");
     const [status, setStatus] = useState("not done");
-
     const [selectedDate, setSelectedDate] = useState(null);
+
+    // const [selectedTodo, setSelectedTodo] = useState(null);
+
+    const [modifiedTodoId, setModifiedTodoId] = useState(0);
+    const [modifiedAction, setModifiedAction] = useState("");
+    const [modifiedStatus, setModifiedStatus] = useState("not done");
+    const [modifiedSelectedDate, setModifiedSelectedDate] = useState(null);
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -19,14 +25,23 @@ function Todo() {
 
     const handleCheckboxChange = () => {
         setStatus((prevStatus) => (prevStatus === "not done" ? "done" : "not done"));
-      };
+    };
+
+    const handleModifiedCheckboxChange = () => {
+        setModifiedStatus((prevStatus) => (prevStatus === "not done" ? "done" : "not done"));
+    };
+
+    const handleTodoClick = (todo) => {
+        // setSelectedTodo(todo);
+        setModifiedTodoId(todo.id);
+        setModifiedAction(todo.action);
+        setModifiedStatus(todo.status);
+        setModifiedSelectedDate(new Date(todo.begin_at));
+    };
 
     useEffect(() => {
         expressServer.getTodosByUser(currentUserId).then((response) => {
-            console.log(response)
             if (response.status === 200) {
-                console.log("Todos retrieved");
-                console.log(response.data);
                 setTodos(response.data);
             } else {
                 console.log("Todos not retrieved");
@@ -48,22 +63,25 @@ function Todo() {
         // Format de la date : 'YYYY-MM-DD HH:mm:ss'
         const datetime = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
         return datetime;
-      }
+    }
+
+    function convertDatimeToText(datetimeString) {
+        const date = new Date(datetimeString);
+        // Obtenez les composants de la date et de l'heure
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Les mois commencent à 0
+        const day = date.getDate();
+        // const hours = date.getHours();
+        // const minutes = date.getMinutes();
+        // const seconds = date.getSeconds();
+        // Format de la date : 'DD-MM-YYYY'
+        const text = `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
+        return text;
+    }
 
     const addTodo = () => {
-        console.log("addTodo");
-        console.log(action)
-        console.log(status)
-        console.log(selectedDate)
-        console.log(convertISOToDatetime(selectedDate))
-
-        if (!selectedDate) {
-            console.log("No date selected");
-            return;
-        }
-
-        if (!action) {
-            console.log("No action");
+        if (!selectedDate || !action) {
+            console.log("Date and action are required");
             return;
         }
 
@@ -74,19 +92,18 @@ function Todo() {
             convertISOToDatetime(selectedDate),
             convertISOToDatetime(selectedDate)
         ).then((response) => {
-            console.log(response)
             if (response.status === 201) {
-                console.log("Todo added");
                 setTodos([...todos, response.data[0]]);
+                // Réinitialiser les champs après l'ajout
+                setAction("");
+                setSelectedDate(null);
+                setStatus("not done");
             } else {
                 console.log("Todo not added");
             }
         }).catch((err) => {
-            if (err.response && err.response.status === 404) {
-                console.log("User not found");
-            } else if (err.response && err.response.status === 500) {
-                console.log("Error adding todo");
-            }
+            // Gérer les erreurs ici
+            console.error(err);
         });
     };
 
@@ -99,6 +116,10 @@ function Todo() {
                     console.log("Todo removed");
                     const newTodos = todos.filter((todo) => todo.id !== todoId);
                     setTodos(newTodos);
+                    setModifiedAction("");
+                    setModifiedStatus("not done");
+                    setModifiedSelectedDate(null);
+                    setModifiedTodoId(null);
                 } else {
                     console.log("Todo not removed");
                 }
@@ -131,6 +152,10 @@ function Todo() {
                     return todo;
                 });
                 setTodos(newTodos);
+                setModifiedAction("");
+                setModifiedStatus("not done");
+                setModifiedSelectedDate(null);
+                setModifiedTodoId(null);
             } else {
                 console.log("Todo not updated");
             }
@@ -144,33 +169,66 @@ function Todo() {
     };
 
     return (
-    <div>
-        C'est la todo
-
-        <div className="todoContainer" onClick={() => {addTodo()}}>add todo</div>
-        <div className="todoContainer" onClick={() => {console.log("Todos :", todos)}}>get todos</div>
-        <div className="todoContainer" onClick={() => {setCompteur(compteur + 1); console.log(compteur + 1)}}>up compteur</div>
-        <div className="todoContainer" onClick={() => {setCompteur(compteur - 1); console.log(compteur - 1)}}>down compteur</div>
-        <div className="todoContainer" onClick={() => {removeTodo(compteur)}}>remove todo</div>
-        <div className="todoContainer" onClick={() => {updateTodo(compteur, action, status, convertISOToDatetime(selectedDate), convertISOToDatetime(selectedDate))}}>update todo</div>
-        <div>{compteur}</div>
-        <div></div>
         <div>
-          <label>Sélectionnez un jour :</label>
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="dd/MM/yyyy"
-          />
-        </div>
-        <div></div>
-        <label>Action :</label>
-        <input type="text" value={action} onChange={(e) => setAction(e.target.value)} />
-        <div></div>
-        <label>Status :</label>
-        <input type="checkbox" checked={status === "done"} onChange={handleCheckboxChange} />
+            <h1>Todo List</h1>
 
-    </div>
+            {/* Formulaire pour ajouter une note */}
+            <div>
+                <h2>Ajouter une note</h2>
+                <div>
+                    <label>Sélectionnez une date :</label>
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        dateFormat="dd/MM/yyyy"
+                    />
+                </div>
+                <div>
+                    <label>Action :</label>
+                    <input type="text" value={action} onChange={(e) => setAction(e.target.value)} />
+                </div>
+                <div>
+                    <label>Status :</label>
+                    <input type="checkbox" checked={status === "done"} onChange={handleCheckboxChange} />
+                </div>
+                <button onClick={addTodo}>Ajouter la note</button>
+            </div>
+
+            {/* Zone qui affiche toutes les notes */}
+            <div>
+                <h2>Liste des notes</h2>
+                <ul>
+                    {todos.map((todo) => (
+                        <li key={todo.id} onClick={() => handleTodoClick(todo)}>
+                            {todo.action} - {todo.status} - {convertDatimeToText(todo.begin_at)}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Zone qui permet de modifier ou de supprimer les notes */}
+            <div>
+                <h2>Modifier/Supprimer la note</h2>
+                <div>
+                    <label>Sélectionnez une date :</label>
+                    <DatePicker
+                        selected={modifiedSelectedDate}
+                        onChange={handleDateChange}
+                        dateFormat="dd/MM/yyyy"
+                    />
+                </div>
+                <div>
+                    <label>Action :</label>
+                    <input type="text" value={modifiedAction} onChange={(e) => setModifiedAction(e.target.value)} />
+                </div>
+                <div>
+                    <label>Status :</label>
+                    <input type="checkbox" checked={modifiedStatus === "done"} onChange={handleModifiedCheckboxChange} />
+                </div>
+                <button onClick={() => updateTodo(modifiedTodoId, modifiedAction, modifiedStatus, convertISOToDatetime(modifiedSelectedDate), convertISOToDatetime(modifiedSelectedDate))}>Modifier la note</button>
+                <button onClick={() => removeTodo(modifiedTodoId)}>Supprimer la note</button>
+            </div>
+        </div>
     );
 }
 
